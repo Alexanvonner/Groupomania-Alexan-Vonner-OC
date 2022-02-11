@@ -16,9 +16,9 @@ const models = require("../models/users");
 exports.signup = (req, res, next) => {
     // Params 
 
-    var email = req.body.email;
-    var username = req.body.username;
+    var email = req.body.email; 
     var password = req.body.password;
+    var username = req.body.username;
     var bio = req.body.bio;
 
     // controle que tout les champs ne soit pas égale a NULL
@@ -36,28 +36,27 @@ exports.signup = (req, res, next) => {
       where : {email : email},
     }).then(function(userFound){
       if (!userFound) {
-        
+        // salt combien de fois sera executer l'algo de hashage
+      bcrypt.hash(req.body.password, 10)
+      .then(hash => {
+        const user = new User({
+            email: req.body.email,
+            password: hash,
+            username : req.body.username,
+            bio : req.body.username,
+        });
+        user.save()
+          .then(() => res.status(201).json({ message: 'Utilisateur créé !' }))
+          .catch(error => res.status(400).json({ error }));
+      })
+      .catch(error => res.status(500).json({ error }));
       } else {
         return res.status(409).json({'error': 'user already exist'});
       }
     }).catch(function(error){
       return res.status(500).json({'error' : 'unable to verify user'});
     });
-   
-    
-    // salt combien de fois sera executer l'algo de hashage
-      bcrypt.hash(req.body.password, 10)
-        .then(hash => {
-          const user = new User({
-            email: req.body.email,
-            password: hash
-          });
-          user.save()
-            .then(() => res.status(201).json({ message: 'Utilisateur créé !' }))
-            .catch(error => res.status(400).json({ error }));
-        })
-        .catch(error => res.status(500).json({ error }));
-    };
+};
     
     
 
