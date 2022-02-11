@@ -1,19 +1,18 @@
-// importation de bcrypt
+// import
 const bcrypt = require("bcrypt");
-
-
-
 const jwt = require('jsonwebtoken');
-
-
 const dotenv = require('dotenv');
 require('dotenv').config();
 
-
+// regex 
+const email_regex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
 // importation models de la bdd User.js
-const User = require("../models/users");
+const models = require("../models/users");
 
+
+
+// ROUTES
 exports.signup = (req, res, next) => {
     // Params 
 
@@ -22,9 +21,28 @@ exports.signup = (req, res, next) => {
     var password = req.body.password;
     var bio = req.body.bio;
 
+    // controle que tout les champs ne soit pas égale a NULL
     if (email == null || username == null || password == null ) {
       return res.status(400).json({'error' : 'missing parameters '})
     };
+
+    // je controle la validité de l'email fourni par l'user
+    if (!email_regex.test(email)) {
+      return res.status(400).json({'error' : 'INVALID EMAIL'})
+    }
+
+    models.User.findOne({
+      attributes : '[email]',
+      where : {email : email},
+    }).then(function(userFound){
+      if (!userFound) {
+        
+      } else {
+        return res.status(409).json({'error': 'user already exist'});
+      }
+    }).catch(function(error){
+      return res.status(500).json({'error' : 'unable to verify user'});
+    });
    
     
     // salt combien de fois sera executer l'algo de hashage

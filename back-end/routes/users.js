@@ -3,10 +3,10 @@ const express = require("express");
 
 
 
-// importation du middleware password
+// Import MiddleWare
 const middlewarePassword = require("../middleware/password");
 
-//importation du controllers/user.js
+//import controllers/user.js
 const userController = require("../controllers/user");
 
 // la fonction Router()

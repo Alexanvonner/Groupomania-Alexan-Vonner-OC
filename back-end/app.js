@@ -18,9 +18,6 @@ const app = express();
 
 
 
-
-
-
 // pour afficher les requests & les responses directement dans la console 
 app.use(morgan("dev"));
 
@@ -36,7 +33,7 @@ app.use(bodyParser.json());
 
 
 app.use("/api/auth", userRoutes);
-// app.use('/api/msg', messageRoutes);
+//app.use('/api/msg', messageRoutes);
 
 
 module.exports = app;
