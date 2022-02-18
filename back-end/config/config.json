@@ -1,22 +1,8 @@
 {
-  "development": {
+  "P7_openclassroom": {
     "username": "root",
     "password": "11021102Aa!",
-    "database": "database_development",
-    "host": "127.0.0.1",
-    "dialect": "mysql"
-  },
-  "test": {
-    "username": "root",
-    "password":  "11021102Aa!",
-    "database": "database_test",
-    "host": "127.0.0.1",
-    "dialect": "mysql"
-  },
-  "production": {
-    "username": "root",
-    "password":  "11021102Aa!",
-    "database": "database_production",
+    "database": "P7_openClassrooms",
     "host": "127.0.0.1",
     "dialect": "mysql"
   }

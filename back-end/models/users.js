@@ -14,12 +14,12 @@ module.exports = (sequelize, DataTypes) => {
       models.Users.hasMany(models.Messages)
     }
   }
-  Users.init({
+  Users.define({
     email: DataTypes.STRING,
     username: DataTypes.STRING,
     password: DataTypes.STRING,
     bio: DataTypes.STRING,
-    isAdmin: DataTypes.BOOLEAN
+    isAdmin: DataTypes.INTEGER
   }, {
     sequelize,
     modelName: 'Users',

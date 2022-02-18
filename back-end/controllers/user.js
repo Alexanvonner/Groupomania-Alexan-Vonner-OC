@@ -37,19 +37,24 @@ exports.signup = (req, res, next) => {
     }).then(function(userFound){
       if (!userFound) {
         // salt combien de fois sera executer l'algo de hashage
-      bcrypt.hash(req.body.password, 10)
+      bcrypt.hash(password, 10)
       .then(hash => {
-        const user = new User({
-            email: req.body.email,
+        const user = new models.User.create({
+            email: email,
             password: hash,
-            username : req.body.username,
-            bio : req.body.username,
-        });
-        user.save()
-          .then(() => res.status(201).json({ message: 'Utilisateur créé !' }))
-          .catch(error => res.status(400).json({ error }));
-      })
-      .catch(error => res.status(500).json({ error }));
+            username : username ,
+            bio : bio,
+            isAdmin : 0,
+        })
+          .then(function(user){
+            return res.status(201).json({
+              'userId' : user.id
+            })
+          })
+          .catch(function(err){
+            return res.status(500).json({'error' : 'cannot add user'});
+          });
+      });
       } else {
         return res.status(409).json({'error': 'user already exist'});
       }
@@ -61,33 +66,4 @@ exports.signup = (req, res, next) => {
     
 
 
-    //login pour s'authentifer
-    exports.login = (req,res,next) => {
-
-    // chercher dans la bdd si l'user est bien present
-      User.findOne({ email: req.body.email })
-        .then(user => {
-          if (!user) {
-              console.log("log de user");
-              console.log(user);
-            return res.status(401).json({ error: 'Utilisateur non trouvé !' });
-          }
-          bcrypt.compare(req.body.password, user.password)
-            .then(valid => {
-              if (!valid) {
-                return res.status(401).json({ error: 'Mot de passe incorrect !' });
-              }
-              res.status(200).json({
-                userId: user._id,
-                token: jwt.sign(
-                    // 3 arguments
-                    {userId :  user._id},
-                    `${process.env.TOKEN}`,
-                    {expiresIn : '12h'}
-                )
-              });
-            })
-            .catch(error => res.status(500).json({ error }));
-        })
-        .catch(error => res.status(500).json({ error }));
-    };
+ 

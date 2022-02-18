@@ -16,7 +16,7 @@ const router = express.Router();
 router.post("/signup" , userController.signup);
 
 // la route login
-router.post("/login" , userController.login)
+//router.post("/login" , userController.login)
 
 // exportation du module
 module.exports = router;

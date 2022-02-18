@@ -2,7 +2,9 @@
 const express = require('express');
 const path = require('path');
 const bodyParser = require("body-parser");
-
+const Db = require('./models/database');
+// Import Sequelize Connection
+const sequelize = require('sequelize');
 
 //importation de MORGAN ( logger http)
 const morgan = require('morgan');
@@ -28,12 +30,22 @@ app.use((req, res, next) => {
   next();
 });
 
+// connection à la base de donnée MYSQL via SEQUELIZE (orm)
+Db.sequelize.sync()
+.then(console.log("-_-_- Connection à la base de donnée réussie !-_-_-_"))
+.catch(error => console.log(error));
+
+
+
+
 // transformer en json
 app.use(bodyParser.json());
 
 
 app.use("/api/auth", userRoutes);
-//app.use('/api/msg', messageRoutes);
+//app.use('/api', messageRoutes);
+
+
 
 
 module.exports = app;
