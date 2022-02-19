@@ -6,4 +6,12 @@ logging: false,//passer a true pour voir les différentes requêtes effectuées 
 });
 //on exporte pour utiliser notre connexion depuis les autre fichiers.
 var exports = module.exports = {};
+sequelize
+ .authenticate()
+ .then(() => {
+  console.info('INFO - Database connected.')
+ })
+ .catch(err => {
+  console.error('ERROR - Unable to connect to the database:', err)
+ })
 exports.sequelize = sequelize;
