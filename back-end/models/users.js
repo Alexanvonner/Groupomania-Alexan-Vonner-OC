@@ -14,7 +14,7 @@ module.exports = (sequelize, DataTypes) => {
       models.Users.hasMany(models.Messages)
     }
   }
-  Users.define({
+  Users.init({
     email: DataTypes.STRING,
     username: DataTypes.STRING,
     password: DataTypes.STRING,
