@@ -1,9 +1,10 @@
 {
-  "P7_openclassroom": {
+  "development": {
     "username": "root",
     "password": "11021102Aa!",
-    "database": "P7_openClassrooms",
+    "database": "P7_OpenClassRooms",
     "host": "127.0.0.1",
     "dialect": "mysql"
   }
+  
 }

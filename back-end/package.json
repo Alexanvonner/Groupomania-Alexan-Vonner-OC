@@ -19,7 +19,8 @@
     "mysql2": "^2.3.3",
     "node_module": "^0.0.0",
     "password-validator": "^5.2.1",
-    "sequelize": "^6.16.2"
+    "sequelize": "^6.16.2",
+    "sequelize-cli": "^6.4.1"
   },
   "devDependencies": {
     "gulp-emojify": "^0.0.2"
